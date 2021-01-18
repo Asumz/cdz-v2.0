@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>中源乐充</title>
+  <script type="text/javascript" src="http://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js"></script>
+  <style>
+    #app {
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+    }
+
+    .index_loading {
+      width: 200px;
+      height: 200px;
+      position: absolute;
+      left: 50%;
+      top: 35%;
+      transform: translate(-50%, -50%);
+      -webkit-transform: translate(-50%, -50%);
+      -moz-transform: translate(-50%, -50%);
+      -o-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+    }
+
+    .index_loading>div.index_loading_item {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      -webkit-transform: translate(-50%, -50%);
+      -moz-transform: translate(-50%, -50%);
+      -o-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+      width: 40px;
+      height: 40px;
+      background-color: rgba(64, 158, 255, 1);
+      border-radius: 50%;
+      animation: Index_Loading 1s linear infinite;
+      -webkit-animation: Index_Loading 1s linear infinite;
+      -moz-animation: Index_Loading 1s linear infinite;
+      -o-animation: Index_Loading 1s linear infinite;
+      -ms-animation: Index_Loading 1s linear infinite;
+    }
+
+    .index_loading>div.index_loading_item:nth-child(2) {
+      animation-delay: 0.2s;
+      -webkit-animation-delay: 0.2s;
+      -moz-animation-delay: 0.2s;
+      -o-animation-delay: 0.2s;
+      -ms-animation-delay: 0.2s;
+    }
+
+    .index_loading>div.index_loading_item:nth-child(3) {
+
+      animation-delay: 0.4s;
+    }
+
+    .index_loading>div.loading_text {
+      position: absolute;
+      bottom: 0;
+      margin-left: 55px;
+      font-size: 16px;
+      color: rgba(64, 158, 255, 1);
+      font-weight: 600;
+    }
+
+    @keyframes Index_Loading {
+      from {
+        width: 3px;
+        height: 3px;
+        background-color: rgba(64, 158, 255, 1);
+      }
+
+      to {
+        width: 120px;
+        height: 120px;
+        background-color: rgba(64, 158, 255, 0);
+      }
+    }
+
+    @-webkit-keyframes Index_Loading {
+      from {
+        width: 3px;
+        height: 3px;
+        background-color: rgba(64, 158, 255, 1);
+      }
+
+      to {
+        width: 120px;
+        height: 120px;
+        background-color: rgba(64, 158, 255, 0);
+      }
+    }
+
+    @-moz-keyframes Index_Loading {
+      from {
+        width: 3px;
+        height: 3px;
+        background-color: rgba(64, 158, 255, 1);
+      }
+
+      to {
+        width: 120px;
+        height: 120px;
+        background-color: rgba(64, 158, 255, 0);
+      }
+    }
+
+    @-o-keyframes Index_Loading {
+      from {
+        width: 3px;
+        height: 3px;
+        background-color: rgba(64, 158, 255, 1);
+      }
+
+      to {
+        width: 120px;
+        height: 120px;
+        background-color: rgba(64, 158, 255, 0);
+      }
+    }
+
+    @-ms-keyframes Index_Loading {
+      from {
+        width: 3px;
+        height: 3px;
+        background-color: rgba(64, 158, 255, 1);
+      }
+
+      to {
+        width: 120px;
+        height: 120px;
+        background-color: rgba(64, 158, 255, 0);
+      }
+    }
+  </style>
+  <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=wvGuSDMA4xjj0t1dPqEtibPvXY5gyN4U"></script>
+  <!-- <script src="https://cdn.bootcss.com/vue/2.5.2/vue.min.js"></script> -->
+  <script src="https://cdn.bootcss.com/vue/2.5.2/vue.js"></script>
+  <script src="https://cdn.bootcss.com/vue-router/3.0.1/vue-router.min.js"></script>
+  <script src="https://cdn.bootcss.com/vuex/3.1.1/vuex.min.js"></script>
+  <script src="https://cdn.bootcss.com/axios/0.19.0/axios.min.js"></script>
+  <script src="https://cdn.bootcss.com/qs/6.9.0/qs.min.js"></script>
+  <script src="https://cdn.bootcss.com/moment.js/2.24.0/moment.min.js"></script>
+  <script src="https://cdn.bootcss.com/echarts/4.4.0-rc.1/echarts.min.js"></script>
+  <script src="https://cdn.bootcss.com/screenfull.js/5.0.0/screenfull.min.js"></script>
+  <script src="https://cdn.bootcss.com/element-ui/2.12.0/index.js"></script>
+
+  <script>
+    if (!window.Vue) {
+      document.write('<script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.min.js"><\/script>')
+    }
+    if (!window.VueRouter) {
+      document.write('<script src="https://cdn.jsdelivr.net/npm/vue-router@3.0.1/dist/vue-router.min.js"><\/script>')
+    }
+    if (!window.Vuex) {
+      document.write('<script src="https://cdn.jsdelivr.net/npm/vuex@3.1.1/dist/vuex.min.js"><\/script>')
+    }
+    if (!window.axios) {
+      document.write('<script src="https://cdn.jsdelivr.net/npm/axios@0.19.0/dist/axios.min.js"><\/script>')
+    }
+    if (!window.Qs) {
+      document.write('<script src="https://cdn.jsdelivr.net/npm/qs@6.9.1/dist/qs.js"><\/script>')
+    }
+    if (!window.moment) {
+      document.write('<script src="https://cdn.jsdelivr.net/npm/moment@2.24.0/moment.min.js"><\/script>')
+    }
+    if (!window.echarts) {
+      document.write('<script src="https://cdn.jsdelivr.net/npm/echarts@4.4.0-rc.1/dist/echarts.min.js"><\/script>')
+    }
+    if (!window.screenfull) {
+      document.write('<script src="https://cdn.jsdelivr.net/npm/screenfull@5.0.0/dist/screenfull.min.js"><\/script>')
+    }
+    if (!window.ELEMENT) {
+      document.write('<script src="https://unpkg.com/element-ui@2.13.0/lib/index.js"><\/script>')
+    }
+  </script>
+
+  <!--這是新添加的CDN -->
+  <!-- <script src="https://unpkg.com/vue-router@3.0.1/dist/vue-router.js"></script> -->
+  <!-- <script src="https://cdn.jsdelivr.net/npm/vue-router@3.0.1/dist/vue-router.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuex@3.1.1/dist/vuex.min.js"></script>
+    <script src="https://unpkg.com/axios@0.19.0/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qs@6.9.1/dist/qs.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.24.0/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@4.4.0-rc.1/dist/echarts.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/screenfull@5.0.0/dist/screenfull.min.js"></script> -->
+
+</head>
+
+<body>
+  <script>
+    if (!Object.defineProperty) {
+      alert('不支持IE9以下的浏览器，请更换其它浏览器！');
+    }
+  </script>
+
+  <div class="index_loading">
+    <div class="index_loading_item"></div>
+    <div class="index_loading_item"></div>
+    <div class="index_loading_item"></div>
+    <div class="loading_text">LOADING ···</div>
+  </div>
+
+  <div id="app"></div>
+  <!-- built files will be auto injected -->
+</body>
+
+</html>
